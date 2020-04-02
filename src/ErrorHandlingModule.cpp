@@ -18,4 +18,10 @@ namespace ErrorHandling
         cin >> badInput;
         return 1;
     }
+
+    int HandleRuntimeError(runtime_error theRuntimeError)
+    {
+        cerr << theRuntimeError.what() << endl;
+        return 1;
+    }
 }

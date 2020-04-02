@@ -5,36 +5,69 @@
 
 using namespace std;
 
-float GetCin(string words, float num)
+float GetOperator(string words)
 {
     cout << words;
-    cin >> num;
-    return num;
+    char Operator;
+    cin >> Operator;
+    return Operator;
 }
 
-float DoDivide(const float dividend, const float divisor)
+float GetOperand(string words)
 {
-    return (dividend / divisor);
+    cout << words;
+    float Operand;
+    cin >> Operand;
+    return Operand;
+}
+
+float Accumulate(const char Operator, const float Operand)
+{
+    static float myAccumulator = 0;
+    switch (Operator)
+    {
+        case '+':
+            myAccumulator = myAccumulator + Operand;
+            break;
+        case '-':
+            myAccumulator = myAccumulator - Operand;
+            break;
+        case '*':
+            myAccumulator = myAccumulator * Operand;
+            break;
+        case '/':
+            myAccumulator = myAccumulator / Operand;
+            break;    
+        default:
+            throw runtime_error("RuntimeError: Invalid operator");
+            break;
+    }
+    return myAccumulator;
 }
 
 int main(int argc, char* argv[])
 {
     ErrorHandling::Initialise();
-    int ReturnCode = 0;
 
-    try
+    do
     {
-        float dividend = GetCin("dividend: ", dividend);
-        float divisor = GetCin("divisor: ", divisor);
-        float result = DoDivide(dividend, divisor);
-        cout << result << endl;
+        try
+        {
+            char Operator = GetOperator("Enter a Operator(+,-,*,/): ");
+            float Operand = GetOperand("Enter a Operand: ");
+            cout << Accumulate(Operator, Operand) << endl;
+        }
+        catch(runtime_error RuntimeError)
+        {
+            ErrorHandling::HandleRuntimeError(RuntimeError);
+        }
+        catch (...)
+        {
+            ErrorHandling::HandleNotNumberError();
+        }
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-        ReturnCode = ErrorHandling::HandleNotNumberError();
-    }
+    while (UserWantsToContinue("More?"));
 
-    PauseForUserAcknowledge();
-    return ReturnCode;
+    //PauseForUserAcknowledge();
+    return 0;
 }

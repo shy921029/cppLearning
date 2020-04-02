@@ -1,11 +1,17 @@
 #ifndef ErrorHandlingMoudleH
 #define ErrorHandlingModuleH
 
+#include <stdexcept>
+
 namespace ErrorHandling
 {
-void Initialise();
+    using namespace std;
 
-int HandleNotNumberError();
+    void Initialise();
+
+    int HandleNotNumberError();
+
+    int HandleRuntimeError(runtime_error theRuntimeError);
 }
 
 #endif
