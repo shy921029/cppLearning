@@ -1,11 +1,9 @@
 #include <iostream>
 
-using namespace std;
+#include "PromptModule.h"
+#include "ErrorHandlingModule.h"
 
-void Initialise()
-{
-    cin.exceptions(cin.failbit);
-}
+using namespace std;
 
 float GetCin(string words, float num)
 {
@@ -19,25 +17,9 @@ float DoDivide(const float dividend, const float divisor)
     return (dividend / divisor);
 }
 
-int HandleNotNumberError()
-{
-    cerr << "not a number" << endl;
-    cin.clear();
-    char badInput[5]; // eat bad input up to 5 characters
-    cin >> badInput;
-    return 1;
-}
-
-void PauseForUserAcknowledge()
-{
-    char stopCharacter;
-    cout << endl << "press any key and \"Enter\": ";
-    cin >> stopCharacter;
-}
-
 int main(int argc, char* argv[])
 {
-    Initialise();
+    ErrorHandling::Initialise();
     int ReturnCode = 0;
 
     try
@@ -50,7 +32,7 @@ int main(int argc, char* argv[])
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
-        ReturnCode = HandleNotNumberError();
+        ReturnCode = ErrorHandling::HandleNotNumberError();
     }
 
     PauseForUserAcknowledge();
